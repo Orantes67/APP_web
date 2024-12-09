@@ -1,0 +1,51 @@
+name: Deploy Angular App to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: deploy
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
+
+      - name: Build Angular app
+        run: npm run build --prod
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Remove old files from EC2
+        run: ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "rm -rf /var/www/angular/browser/*"
+
+      - name: Deploy to EC2
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          source: dist//*
+          target: /var/www/angular/browser/
+
+      - name: Reload Nginx
+        run: ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} "sudo systemctl reload nginx"
