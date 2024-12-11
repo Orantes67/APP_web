@@ -1,0 +1,15 @@
+<div>
+  <h2>Editar Post</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="title">Título:</label>
+      <input id="title" [(ngModel)]="post.titulo" name="title" required />
+    </div>
+    <div>
+      <label for="content">Contenido:</label>
+      <textarea id="content" [(ngModel)]="post.descripcion" name="content" required></textarea>
+    </div>
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>

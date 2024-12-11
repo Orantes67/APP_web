@@ -1,0 +1,23 @@
+<div class="bg-gray-800 p-8 rounded-lg shadow-lg mb-8 max-w-2xl mx-auto">
+  <h3 class="text-3xl font-semibold text-white mb-8 text-center">Crear un nuevo post</h3>
+
+  <form (ngSubmit)="addPost()">
+ 
+    
+    <div class="mb-6">
+      <label for="titulo" class="block text-sm font-medium text-gray-300 mb-2">Título</label>
+      <input type="text" id="titulo" [(ngModel)]="post.titulo" name="titulo" class="bg-gray-700 text-white placeholder-gray-400 px-4 py-3 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none w-full transition-all duration-200 ease-in-out" required />
+    </div>
+
+    
+    <div class="mb-6">
+      <label for="descripcion" class="block text-sm font-medium text-gray-300 mb-2">Descripción</label>
+      <textarea id="descripcion" [(ngModel)]="post.descripcion" name="descripcion" class="bg-gray-700 text-white placeholder-gray-400 px-4 py-3 rounded-md focus:ring-2 focus:ring-orange-500 focus:outline-none w-full transition-all duration-200 ease-in-out" required></textarea>
+    </div>
+
+    
+    <div class="mb-6">
+      <button type="submit" class="w-full bg-orange-500 text-white py-3 rounded-md text-lg hover:bg-orange-600 focus:ring-4 focus:ring-orange-500 focus:outline-none transition duration-200 ease-in-out">Agregar Post</button>
+    </div>
+  </form>
+</div>

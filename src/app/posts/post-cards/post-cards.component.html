@@ -1,0 +1,62 @@
+<div *ngFor="let post of posts" class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6 hover:bg-gray-700 ease-in-out transform ">
+  <h3 class="text-2xl font-semibold text-white mb-2">{{ post.titulo }}</h3>
+  <p class="text-gray-500 text-sm mb-2">{{ post.fecha }}</p>
+  <p *ngIf="!isEditing(post.post_id)" class="text-gray-400 text-sm mt-2">{{ post.descripcion }}</p>
+  <input 
+    *ngIf="isEditing(post.post_id)" 
+    [(ngModel)]="editableDescripcion"
+    class="mt-2 p-3 w-full rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+    placeholder="Edita la descripción"
+  />
+  <div class="flex space-x-2 mt-4">
+    <button 
+      *ngIf="!isEditing(post.post_id)" 
+      (click)="enableEdit(post)" 
+      class="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 transition">
+      Editar
+    </button>
+    <button 
+      *ngIf="isEditing(post.post_id)" 
+      (click)="saveEdit()"  
+      class="bg-green-500 text-white px-5 py-2 rounded-md hover:bg-green-600 focus:ring-2 focus:ring-green-500 transition">
+      Guardar
+    </button>
+    <button 
+      *ngIf="isEditing(post.post_id)" 
+      (click)="cancelEdit()" 
+      class="bg-gray-500 text-white px-5 py-2 rounded-md hover:bg-gray-600 focus:ring-2 focus:ring-gray-500 transition">
+      Cancelar
+    </button>
+    <button 
+      (click)="deletePost(post.post_id)" 
+      class="bg-red-500 text-white px-5 py-2 rounded-md hover:bg-red-600 focus:ring-2 focus:ring-red-500 transition">
+      Eliminar
+    </button>
+  </div>
+
+  <div class="mt-6">
+    <h4 class="text-lg font-semibold text-white mb-2">Comentarios:</h4>
+    <div *ngFor="let comentario of post.comentarios" class="bg-gray-700 p-3 rounded-lg mt-2">
+      <p class="text-gray-400 text-sm"><strong>Usuario {{ comentario.usuario_id }}:</strong> {{ comentario.contenido }}</p>
+      <p class="text-gray-500 text-xs">{{ comentario.fecha }}</p>
+      <button 
+        (click)="autoFillComment(post.post_id, comentario.contenido)"
+        class="text-blue-500 text-sm mt-2">
+        Rellenar con este comentario
+      </button>
+    </div>
+
+    <div class="mt-4">
+      <input 
+        [(ngModel)]="newComments[post.post_id]" 
+        placeholder="Escribe un comentario..."
+        class="p-3 w-full rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      />
+      <button 
+        (click)="addComment(post.post_id)" 
+        class="bg-blue-500 text-white px-5 py-2 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 transition mt-2">
+        Comentar
+      </button>
+    </div>
+  </div>
+</div>

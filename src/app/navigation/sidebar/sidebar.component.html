@@ -1,0 +1,30 @@
+<div class="flex flex-col bg-gray-800 text-white p-4 w-full h-full  shadow-lg">
+  <!-- Título -->
+  <div class="p-5 text-[25px]">
+    <h1 class="text-4xl font-bold text-orange-500 mb-6 text-center md:text-left">
+      URBANEVOLUTION
+    </h1>
+    <hr class="border-t-2 border-orange-500 hidden lg:block" />
+
+    <!-- Opciones de navegación -->
+    <ul class="mt-6">
+     
+      <li
+        (click)="navigation(2)"
+        class="flex items-center px-4 py-3 rounded-lg bg-gray-700 text-gray-200 hover:bg-orange-500 hover:text-white cursor-pointer transition-all duration-300 mb-4"
+      >
+        <span class="flex-1 text-lg font-semibold">Post</span>
+      </li>
+    </ul>
+  </div>
+
+  
+  <div class="mt-auto flex justify-center">
+    <button 
+      (click)="logout()" 
+      class="self-end text-lg font-semibold text-gray-200 hover:text-orange-500 flex items-center focus:outline-none transition-all duration-300"
+    >
+      <span>Cerrar sesión</span>
+    </button>
+  </div>
+</div>
